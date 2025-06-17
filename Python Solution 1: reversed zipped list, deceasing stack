@@ -1,0 +1,20 @@
+class Solution:
+    def carFleet(self, target: int, position: List[int], speed: List[int]) -> int:
+        stack = []
+        zipped = list(zip(position, speed))
+        zipped.sort(reverse=True)
+        for pos, s in zipped:
+            arrival = (target-pos)/s
+            if not stack:
+                stack.append(arrival)
+            else:
+                priorArrival = stack[-1]
+                if arrival <= priorArrival:
+                    continue
+                else:
+                    stack.append(arrival)
+        counter=0
+        while stack:
+            stack.pop()
+            counter+=1
+        return counter
